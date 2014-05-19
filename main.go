@@ -19,9 +19,15 @@ type File struct {
 	Directory string
 }
 
-type PlaylistInfo struct {
+type PlaylistsTemplateData struct {
+	Playlists []string
+	Ip string
+}
+
+type PlaylistTemplateData struct {
 	Songs []Song
 	Name string
+	Ip string
 }
 
 func urlencode(input string) string {
@@ -53,9 +59,16 @@ func readFilesRecursive(dirname string) []File {
 	return results
 }
 
+var ips = make(map[string]string)
 var dir string = os.Getenv("STREAMER_PATH")
 
 func main() {
+	ips["TITAN"] = "localhost"
+	ips["alx-glesys"] = "109.74.1.81"
+
+	host, _ := os.Hostname()
+	ip := ips[host]
+
 	http.Handle("/listen/", http.StripPrefix("/listen/", http.FileServer(http.Dir(dir))))
 	
 	// Returns a feed of songs in a specific playlist.
@@ -74,7 +87,7 @@ func main() {
 		t := template.Must(template.ParseFiles(
 			"templates/playlist.xml",
 		))
-		t.Execute(w, PlaylistInfo{songs, name})
+		t.Execute(w, PlaylistTemplateData{songs, name, ip})
 	})
 
 	// Shows a list of all playlists.
@@ -90,7 +103,7 @@ func main() {
 		t := template.Must(template.ParseFiles(
 			"templates/playlists.xml",
 		))
-		t.Execute(w, playlists)
+		t.Execute(w, PlaylistsTemplateData{playlists, ip})
 	})
 
 	err := http.ListenAndServe(":8084", nil)

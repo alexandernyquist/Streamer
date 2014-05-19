@@ -3,18 +3,17 @@
     <channel>
         <title>Playlists - Lstn - By Alex</title>
         <description>Alexander Nyquists private music streamer, bitch!</description>
-        <link>http://localhost:8084</link>
+        <link>http://{{$.Ip}}:8084</link>
         <language>en-us</language>
         <copyright>Copyright 2014</copyright>
         <lastBuildDate>Fri, 07 May 2014 00:15:00 -0500</lastBuildDate>
         <pubDate>Fri, 07 May 2014 00:15:00 -0500</pubDate>
         <ttl>60</ttl>   
-
-        {{range .}}
+        {{range .Playlists}}
             <item>
                 <title>{{.}}</title>
-                <link>http://localhost:8084/playlists/{{.}}</link>
-                <guid>http://localhost:8084/playlists/{{.}}</guid>
+                <link>http://{{$.Ip}}:8084/playlists/{{.}}</link>
+                <guid>http://{{$.Ip}}:8084/playlists/{{.}}</guid>
                 <description>{{.}}</description>
                 <category>{{.}}</category>
                 <pubDate>Fri, 07 May 2014 00:15:00 -0500</pubDate>
