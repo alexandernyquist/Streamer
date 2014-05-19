@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+    <channel>
+        <title>{{.Name}} - Lstn - By Alex</title>
+        <description>Alexander Nyquists private music streamer, bitch!</description>
+        <link>http://localhost:8084</link>
+        <language>en-us</language>
+        <copyright>Copyright 2014</copyright>
+        <lastBuildDate>Fri, 07 May 2014 00:15:00 -0500</lastBuildDate>
+        <pubDate>Fri, 07 May 2014 00:15:00 -0500</pubDate>
+        <ttl>60</ttl>   
+
+        {{range .Songs}}
+            <item>
+                <title>{{.Name}}</title>
+                <link>http://localhost:8084/listen/{{.Path}}</link>
+                <guid>http://localhost:8084/listen/{{.Path}}</guid>
+                <description>{{.Name}}</description>
+                <enclosure url="http://localhost:8084/listen/{{.Path}}" type="audio/mpeg"/>
+                <category>Electro House</category>
+                <pubDate>Fri, 07 May 2014 00:15:00 -0500</pubDate>
+            </item>
+        {{end}}
+    </channel>
+</rss>
